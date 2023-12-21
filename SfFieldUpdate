@@ -1,0 +1,18 @@
+<script runat="server">
+Platform.Load("core","1.1.1");
+
+var sfUpdateString;
+var targetDE = DataExtension.Init('ExternalKey').Rows.Retrieve();
+
+  for (var i = 0; i < targetDE.length; i++)
+  {
+    var Field1 = targetDE[i].DEField1;
+    var Field2 = targetDE[i].DEField2;
+
+sfUpdateString = '';
+sfUpdateString = '%'+'%[SET @rs = UpdateSingleSalesforceObject("ObjectName","'+Field1+'"';
+sfUpdateString += ',"SFFieldForUpdate","'+Field2+'")]%'+'%';
+Platform.Function.TreatAsContent(sfUpdateString);
+Write(Platform.Variable.GetValue("@rs"));
+  }
+</script>
